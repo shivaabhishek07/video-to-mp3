@@ -50,13 +50,15 @@ def createJWT(username,secret,authz):
     return jwt.encode(
             {
                 "username":username,
-                "exp":datetime.datetime.utcnow()
-                "iat":datetime.datetime.utcnow()
-                "admin":authz
+                "exp":datetime.datetime.now(tz=datetime.timezone.utc)
+            + datetime.timedelta(days=1),
+                "iat":datetime.datetime.utcnow(),
+                "admin":authz,
                 },
             secret,
             algorithm="HS256",)
-
+if __name__=="__main__":
+    server.run(host="0.0.0.0",port=5000)
 
 
 
